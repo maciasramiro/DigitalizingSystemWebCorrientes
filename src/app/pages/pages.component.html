@@ -1,0 +1,34 @@
+<mat-toolbar>
+    <button mat-icon-button *ngIf="sidenav.mode==='over'" (click)="sidenav.toggle()">
+      <mat-icon *ngIf="!sidenav.opened">menu</mat-icon>
+      <mat-icon *ngIf="sidenav.opened">close</mat-icon>
+    </button>
+    <span>Ypsilon</span>
+  </mat-toolbar>
+  
+  <mat-sidenav-container  class="example-container">
+    <mat-sidenav #sidenav="matSidenav" class="mat-elevarion-z8" mode="side" opened>
+      <img class="avatar mat-elevarion-z8" src="../assets/img/logo.jpg" alt="">
+      <h4 class="name"> Usuario</h4>
+      <p class="designation"></p>
+  
+      <mat-divider></mat-divider>
+  
+      <button mat-button class="menu-button">
+        <mat-icon>person</mat-icon>
+        <span> <a [routerLink]="'persona/persona'" >Buscar</a></span>
+      </button>
+  
+      <mat-divider></mat-divider>
+      <button mat-button class="menu-button">
+        <mat-icon>logout</mat-icon>
+        <span><a [routerLink]="'/'" >Salir</a></span>
+      </button>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <div class="content mat-elevarion-z8">
+        <router-outlet></router-outlet>
+      </div>
+     
+    </mat-sidenav-content>
+  </mat-sidenav-container>

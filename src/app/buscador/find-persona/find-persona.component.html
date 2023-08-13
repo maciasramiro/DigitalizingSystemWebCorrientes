@@ -1,0 +1,85 @@
+<mat-sidenav-container class="example-container">
+    <mat-sidenav-content>
+        <div class="content mat-elevarion-z8 ">
+            <div class="row">
+                <div class="mt-1">
+                    <label for="apellido" class="mt-2 d-flex ">Apellido</label>
+                    <input type="text" [(ngModel)]="apellido" class="form-control mt-1" autocomplete="false">
+                </div>
+                <div class="mt-1">
+                    <label for="nombre" class="mt-2 d-flex ">Nombre</label>
+                    <input type="text" [(ngModel)]="nombre" class="form-control mt-1" autocomplete="false">
+                </div>
+                <div class="mt-1">
+                    <label for="nombre" class="mt-2 d-flex ">Numero de Documento</label>
+                    <input type="text" [(ngModel)]="nrodoc" class="form-control mt-1" autocomplete="false">
+                </div>
+                <div class="mt-1">
+                    <label for="nombre" class="mt-2 d-flex ">Legajo</label>
+                    <input type="text" [(ngModel)]="legajo" class="form-control mt-1" autocomplete="false">
+                </div>
+                <div class="mt-1">
+                    <button type="button" class="btn btn-primary btn-lg button-left" (click)="limpiar()">
+                        limpiar
+                    </button>
+                    <span></span>
+                    <button type="button" class="btn btn-primary btn-lg button_rigth" (click)="search()">
+                        Buscar
+                    </button>
+                </div>
+
+                <div style="margin-top: 70px;">
+                    <mat-form-field>
+                        <mat-label>filtrar</mat-label>
+                        <input matInput (keyup)="applyFilter($event)" placeholder="" #input>
+                    </mat-form-field>
+
+                    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="Id">
+                            <th mat-header-cell [hidden]="true" *matHeaderCellDef> Id. </th>
+                            <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.Id}} </td>
+                        </ng-container>
+
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="NombreCompleto">
+                            <th mat-header-cell *matHeaderCellDef> Nombre Completo </th>
+                            <td mat-cell *matCellDef="let element"> {{element.NombreCompleto}} </td>
+                        </ng-container>
+
+                        <!-- Weight Column -->
+                        <ng-container matColumnDef="NroDocumento">
+                            <th mat-header-cell *matHeaderCellDef> Número de Documento </th>
+                            <td mat-cell *matCellDef="let element"> {{element.NroDocumento}} </td>
+                        </ng-container>
+
+                        <!-- Symbol Column -->
+                        <ng-container matColumnDef="TipoDocumento">
+                            <th mat-header-cell *matHeaderCellDef> Tipo de Documento </th>
+                            <td mat-cell *matCellDef="let element"> {{element.TipoDocumento}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="actions">
+                            <th mat-header-cell *matHeaderCellDef>Actions</th>
+                            <td mat-cell *matCellDef="let row" >
+                                <button mat-button (click)="getRecord(row)"><mat-icon>visibility</mat-icon></button>
+                            </td>
+                        </ng-container>
+                        
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                        <!-- Row shown when there is no matching data. -->
+                        <tr class="mat-row" *matNoDataRow>
+                            <td class="mat-cell" colspan="4">Sin datos para filtrar "{{input.value}}"</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <mat-spinner *ngIf="loading"></mat-spinner>
+    </mat-sidenav-content>
+</mat-sidenav-container>

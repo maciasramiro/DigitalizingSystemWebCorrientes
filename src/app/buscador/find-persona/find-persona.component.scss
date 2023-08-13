@@ -1,0 +1,108 @@
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+mat-sidenav-container {
+    height: calc(100vh - 95px);
+}
+
+mat-sidenav {
+    margin: 16px;
+    width: 200px;
+    border-right: none;
+    background: #9816f4;
+    color: white;
+    border-radius: 20px;
+    padding: 16px;
+    text-align: center;
+}
+
+mat-toolbar {
+    background: #9816f4;
+    color: white;
+}
+
+.avatar {
+    margin-top: 16px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+}
+
+.name {
+    margin-top: 8px;
+    font-weight: normal;
+}
+
+.designation {
+    margin-top: 2px;
+    font-size: 0.7rem;
+    color: lightgray;
+}
+
+.menu-button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 1rem;
+
+    mat-icon,
+    span,
+    a {
+        margin-right: 8px;
+        color: white;
+    }
+}
+
+.content {
+    //height: calc(100vh - 95px);
+    border-radius: 20px;
+    margin: 16px;
+    margin-left: 32px;
+    display: flex;
+    font-size: 1, 5rem;
+    color: lightgray;
+}
+
+mat-divider {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    background-color: white;
+}
+
+mat-sidenav-content {
+    height: calc(100vh - 95px);
+}
+
+a {
+    text-decoration: none;
+}
+
+.button_rigth {
+    margin-top: 6px;
+    position: absolute;
+    right: 20px;
+    background: #9816f4;
+    border-color: #9816f4;;
+    color: white;
+}
+
+.button-left{
+    margin-top: 6px;
+    position: absolute;
+    //margin-left: 10px;
+    background: #787af3;
+    border-color: #787af3;;
+    color: white;
+}
+
+/* Structure */
+table {
+    width: 100%;
+}
+
+.mat-mdc-form-field {
+    font-size: 14px;
+    width: 100%;
+}

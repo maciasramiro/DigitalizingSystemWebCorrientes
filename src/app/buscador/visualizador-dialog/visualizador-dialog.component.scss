@@ -1,0 +1,44 @@
+mat-toolbar{
+    background: #9816f4;
+    color: white;
+}
+
+.button_rigth {
+    margin-top: 16px;
+    position: absolute;
+    right: 20px;
+    background: #9816f4;
+    border-color: #9816f4;;
+    color: white;
+}
+
+.imagen-style{
+    margin-top: 16px;
+    width: 600px;
+    height: 400px;
+}
+
+/*
+Full screen Modal 
+*/
+.fullscreen-modal .modal-dialog {
+    margin: 0;
+    margin-right: auto;
+    margin-left: auto;
+    width: 100%;
+  }
+  @media (min-width: 768px) {
+    .fullscreen-modal .modal-dialog {
+      width: 750px;
+    }
+  }
+  @media (min-width: 992px) {
+    .fullscreen-modal .modal-dialog {
+      width: 970px;
+    }
+  }
+  @media (min-width: 1200px) {
+    .fullscreen-modal .modal-dialog {
+       width: 1170px;
+    }
+  }

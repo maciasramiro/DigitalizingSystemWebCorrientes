@@ -50,3 +50,5 @@ Thumbs.db
 /favicon.ico
 Scripts.zip
 /.vs
+/.angular/cache/16.1.0
+/.vscode
