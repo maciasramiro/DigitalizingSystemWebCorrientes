@@ -1,0 +1,9 @@
+<div class="image-container" (mousedown)="onImageMouseDown($event)">
+    <img
+      #imagenElement
+      class="img-responsive imagen-style"
+      [src]="imagenUrl"
+      alt="Imagen de Documento"
+      [style.transform]="getImageTransform()"
+    />
+  </div>

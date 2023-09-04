@@ -15,7 +15,17 @@ const routes: Routes = [
         path: 'persona',
         loadChildren: () => import('./buscador/persona.module').then(m => m.PersonaModule),
         canActivate:[AuthGuard]
-      }
+      },
+      {
+        path:'auditoria',
+        loadChildren:()=>import('./buscador/persona.module').then(m => m.PersonaModule),
+        canActivate: [AuthGuard]
+      },
+      {
+        path:'auditoriaDocumento',
+        loadChildren:()=>import('./buscador/persona.module').then(m => m.PersonaModule),
+        canActivate: [AuthGuard]
+      },
     ]
   }
 ];

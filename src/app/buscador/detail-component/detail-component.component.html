@@ -1,0 +1,112 @@
+<button class="loading-overlay" [hidden]="!loadingIndicatorService.loading">
+  <span
+    class="spinner-border spinner-border-sm"
+    role="status"
+    aria-hidden="true"
+  ></span>
+  Cargando...
+</button>
+<mat-toolbar><span>Información Recuperada</span></mat-toolbar>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <ng-container matColumnDef="Apellido">
+    <th mat-header-cell *matHeaderCellDef>Apellido</th>
+    <td mat-cell *matCellDef="let row">{{ row.Apellido }}</td>
+  </ng-container>
+  <ng-container matColumnDef="Nombre">
+    <th mat-header-cell *matHeaderCellDef>Nombre</th>
+    <td mat-cell *matCellDef="let row">{{ row.Nombre }}</td>
+  </ng-container>
+  <ng-container matColumnDef="TipoDocumento">
+    <th mat-header-cell *matHeaderCellDef>Tipo de Documento</th>
+    <td mat-cell *matCellDef="let row">{{ row.TipoDocumento.Descripcion }}</td>
+  </ng-container>
+  <ng-container matColumnDef="NumeroDocumento">
+    <th mat-header-cell *matHeaderCellDef>Nro de Documento</th>
+    <td mat-cell *matCellDef="let row">{{ row.NumeroDocumento }}</td>
+  </ng-container>
+  <ng-container matColumnDef="Genero">
+    <th mat-header-cell *matHeaderCellDef>Genero</th>
+    <td mat-cell *matCellDef="let row">{{ row.Genero }}</td>
+  </ng-container>
+  <ng-container matColumnDef="Legajo">
+    <th mat-header-cell *matHeaderCellDef>Legajo</th>
+    <td mat-cell *matCellDef="let row">{{ row.Legajo }}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
+<mat-paginator
+  [pageSize]="5"
+  [length]="datos.PersonasDtos.length"
+></mat-paginator>
+
+<div  style="text-align: center">
+    <a class="abrir-nueva-pantalla" (click)="abrirImagenEnNuevaVentana()"
+      >Ver Imagen</a
+    >
+</div>
+
+<div class="zoom_outer" style="text-align: center">
+  
+    <img id="zoom" [src]="imagenUrl" alt="zoom" />
+  
+  <div>
+    <button mat-icon-button (click)="prevImage()">
+      <mat-icon>keyboard_arrow_left</mat-icon>
+    </button>
+    <button mat-icon-button (click)="nextImage()">
+      <mat-icon>keyboard_arrow_right</mat-icon>
+    </button>
+  </div>
+</div>
+<!-- <script>
+  var scale = 1,
+    panning = false,
+    pointX = 0,
+    pointY = 0,
+    start = { x: 0, y: 0 },
+    zoom = document.getElementById("zoom");
+
+  function setTransform() {
+    zoom.style.transform =
+      "translate(" + pointX + "px, " + pointY + "px) scale(" + scale + ")";
+  }
+
+  zoom.onmousedown = function (e) {
+    e.preventDefault();
+    start = { x: e.clientX - pointX, y: e.clientY - pointY };
+    panning = true;
+  };
+
+  zoom.onmouseup = function (e) {
+    panning = false;
+  };
+
+  zoom.onmousemove = function (e) {
+    e.preventDefault();
+    if (!panning) {
+      return;
+    }
+    pointX = e.clientX - start.x;
+    pointY = e.clientY - start.y;
+    setTransform();
+  };
+
+  zoom.onwheel = function (e) {
+    e.preventDefault();
+    var xs = (e.clientX - pointX) / scale,
+      ys = (e.clientY - pointY) / scale,
+      delta = e.wheelDelta ? e.wheelDelta : -e.deltaY;
+    delta > 0 ? (scale *= 1.2) : (scale /= 1.2);
+    pointX = e.clientX - xs * scale;
+    pointY = e.clientY - ys * scale;
+
+    setTransform();
+  };
+</script> -->
+<!-- </div> -->
+
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close class="button_rigth">Salir</button>
+</mat-dialog-actions>

@@ -8,6 +8,7 @@ import { Documento, WebApiResponse } from 'src/app/models/documento_response';
 import { Dialog } from '@angular/cdk/dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { VisualizadorDialogComponent } from '../visualizador-dialog/visualizador-dialog.component';
+import { LoadingIndicatorService } from 'src/app/shared/services/loading-indicator.service';
 
 
 @Component({
@@ -29,7 +30,7 @@ export class FindPersonaComponent {
 
   dataSource = new MatTableDataSource<SearchResult>();
 
-  constructor(private personaService: PersonaService, private toastr: ToastrService, private dialog: MatDialog) { }
+  constructor(private personaService: PersonaService, private toastr: ToastrService,public  loadingIndicatorService: LoadingIndicatorService, private dialog: MatDialog) { }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -50,11 +51,14 @@ export class FindPersonaComponent {
 
     var personaRequest = new PersonaRequest(this.apellido, this.nombre, this.nrodoc, this.legajo);
 
+    this.loadingIndicatorService.showLoading();
     this.personaService.find(personaRequest).subscribe((response: any) => {
       if (response.Success && response.Data != null) {
         this.dataSource.data = response.Data;
+        this.loadingIndicatorService.hideLoading();
       } else {
-        this.toastr.error('Credenciales Incorrectas', 'Advertencia');
+        this.toastr.error('Error al buscar Personas', 'Advertencia');
+        this.loadingIndicatorService.hideLoading();
         return;
       }
     });

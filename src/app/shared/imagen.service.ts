@@ -1,12 +1,14 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ImagenService {
-  private url = 'http://186.109.233.31:8585/WebApi/api/image/GetImage?CarillaId=';
+  //private url = 'http://186.109.233.31:8585/WebApi/api/image/GetImage?CarillaId=';
+  private url = environment.api + '/image/GetImage?CarillaId=';
   
   constructor(private http: HttpClient) { }
 

@@ -1,5 +1,12 @@
+<button class="loading-overlay" [hidden]="!loadingIndicatorService.loading">
+  <span
+    class="spinner-border spinner-border-sm"
+    role="status"
+    aria-hidden="true"
+  ></span>
+  Cargando...
+</button>
 <mat-toolbar><span>Información</span></mat-toolbar>
-<!-- <h2 mat-dialog-title>Información</h2> -->
 <div class="row">
   <div class="col-md-4">
     <mat-dialog-content>
@@ -10,27 +17,27 @@
       <p>Sexo: {{data.Sexo =='M' ? 'Masculino': 'Femenino'}}</p>
   
   </mat-dialog-content>
-  <h2 mat-dialog-title>Hojas</h2>
-  <mat-dialog-content>
-    <div *ngFor="let hoja of data.Hojas; let i = index">
-      <p>Hoja {{ i + 1 }}</p>
-      <div>
-        <h4>Imagen frontal:</h4>
-        <p hidden="true">{{ hoja.ImagenFrontalId }}</p>
-        <button mat-button (click)="obtentenerImagen(hoja.ImagenFrontalId)"><mat-icon>visibility</mat-icon></button>
-      </div>
-      <div>
-        <h4>Imagen Reverso:</h4>
-        <p hidden="true">{{ hoja.ImagenReversoId }}</p>
-        <button mat-button (click)="obtentenerImagen(hoja.ImagenReversoId)"><mat-icon>visibility</mat-icon></button>
-      </div>
-    </div>
     
-  </mat-dialog-content>
   </div>
-  <div class="col-md-8">
-    <img [src]="imagenUrl" alt="Imagen" class="img-responsive imagen-style" >
+  <div  style="text-align: center">
+    <a class="abrir-nueva-pantalla" (click)="abrirImagenEnNuevaVentana()"
+      >Ver Imagen</a
+    >
+</div>
+
+<div class="zoom_outer" style="text-align: center">
+  
+    <img id="zoom" [src]="imagenUrl" alt="zoom" />
+  
+  <div>
+    <button mat-icon-button (click)="prevImage()">
+      <mat-icon>keyboard_arrow_left</mat-icon>
+    </button>
+    <button mat-icon-button (click)="nextImage()">
+      <mat-icon>keyboard_arrow_right</mat-icon>
+    </button>
   </div>
+</div>
 </div>
 
 

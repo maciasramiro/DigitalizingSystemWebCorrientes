@@ -1,0 +1,46 @@
+mat-toolbar{
+    background: #9816f4;
+    color: white;
+}
+.content{
+    height: auto;
+    margin-top: 16px;
+    margin-left: 10px;
+    margin-right: 10px;
+    bottom: 10px;
+}
+
+th, td {
+    width: 100px; /* Establece un ancho fijo para todas las columnas */
+  }
+
+  table {
+    table-layout: fixed;
+  }
+
+  .loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(225, 185, 243, 0.8); /* Fondo semitransparente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Z-index alto para estar por encima de otros elementos */
+  }
+
+
+  .button {
+    right: 20px;
+    background: #9816f4;
+    border-color: #9816f4;;
+    color: white;
+    padding: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+

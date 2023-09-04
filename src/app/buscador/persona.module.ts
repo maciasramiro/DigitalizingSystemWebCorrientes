@@ -15,12 +15,22 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
 import { VisualizadorDialogComponent } from './visualizador-dialog/visualizador-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { VisualizarLoteDigitalizadoComponent } from './visualizar-lote-digitalizado/visualizar-lote-digitalizado.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { DocumentoLoteComponent } from './documento-lote/documento-lote.component';
+import { DetailComponentComponent } from './detail-component/detail-component.component';
+import { LoadingIndicatorComponent } from './loading-indicator/loading-indicator.component';
 
 
 @NgModule({
   declarations: [
     FindPersonaComponent,
-    VisualizadorDialogComponent
+    VisualizadorDialogComponent,
+    VisualizarLoteDigitalizadoComponent,
+    DocumentoLoteComponent,
+    DetailComponentComponent,
+    LoadingIndicatorComponent
   ],
   imports: [
     CommonModule,
@@ -37,7 +47,13 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatCardModule,
     MatProgressSpinnerModule,
     MatTableModule,
-    MatDialogModule
-  ]
+    MatDialogModule,
+    MatSelectModule,
+    MatPaginatorModule
+  ],
+  exports:[
+    MatPaginatorModule
+  ],
+  bootstrap: [VisualizarLoteDigitalizadoComponent]
 })
 export class PersonaModule { }

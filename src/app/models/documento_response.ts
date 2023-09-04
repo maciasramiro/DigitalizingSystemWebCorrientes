@@ -1,10 +1,11 @@
 export interface WebApiResponse {
-  Data: Documento
+  Data: any
   Success: boolean
   Message: any
 }
 
 export interface Documento {
+  PersonasDtos: any
   Id: number
   TipoDocumento: TipoDocumento
   NumeroDocumento: string

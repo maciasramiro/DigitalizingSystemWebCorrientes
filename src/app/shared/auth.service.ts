@@ -9,7 +9,10 @@ import { Login } from '../models/login';
 })
 export class AuthService {
   //private url='http://186.109.233.31:8585/WebApi/api/login/authenticate';
-  private url = 'http://localhost/WebApi/api/login/authenticate';
+  //private url =  'http://localhost/WebApi/api/login/authenticate';
+
+  private url = environment.api + '/login';
+
   private grantType = 'password';
   private usuarioInicioSesion = new BehaviorSubject<boolean>(false);
   constructor(private http: HttpClient) { }
@@ -59,7 +62,7 @@ export class AuthService {
 
     //return this.http.post<token>(this.url, userLogin);
     var data;
-    return this.http.get<any>(`http://186.109.233.31:8585/WebApi/api/login/auth?username=${username}&password=${password}`).pipe(
+    return this.http.get<any>(`${this.url}/auth?username=${username}&password=${password}`).pipe(
       map((result) => {
         if (result.Data != null) {
           data = result.Data;
@@ -90,6 +93,13 @@ export class AuthService {
   public echoping() {
     const urlEcho = 'http://186.109.233.31:8585/WebApi/api/login/echoping';
     return this.http.get<any>(urlEcho);
+  }
+
+
+  public isAdmin() {
+    console.log("IS ADMIN")
+    var token = localStorage.getItem(environment.token_name);
+    return this.http.get<any>(this.url + '/isAdmin', { headers: { 'Authorization': `Bearer ${token}` } });
   }
 }
 

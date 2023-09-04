@@ -1,71 +1,132 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  HostListener,
+  Inject,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { Documento } from 'src/app/models/documento_response';
 import { ImagenService } from 'src/app/shared/imagen.service';
+import { ChangeDetectorRef } from '@angular/core';
 import { LoadingIndicatorService } from 'src/app/shared/services/loading-indicator.service';
 
 @Component({
-  selector: 'app-visualizador-dialog',
-  templateUrl: './visualizador-dialog.component.html',
-  styleUrls: ['./visualizador-dialog.component.scss']
+  selector: 'app-detail-component',
+  templateUrl: './detail-component.component.html',
+  styleUrls: ['./detail-component.component.scss'],
 })
-export class VisualizadorDialogComponent implements OnInit {
+export class DetailComponentComponent implements AfterViewInit {
   imageToShow: any;
   imagenUrl: string | null | undefined;
   datos: Documento;
-
-  currentImageIndex = 0;
   imageId: number;
-  imageDialogOpen = false;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: Documento,
+  dataSource: MatTableDataSource<any>;
+  displayedColumns: string[] = [
+    'Apellido',
+    'Nombre',
+    'TipoDocumento',
+    'NumeroDocumento',
+    'Genero',
+    'Legajo',
+  ];
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  imageDialogOpen = false;
+  currentImageIndex = 0;
+
+  isZoomed = false;
+  isDragging = false;
+  startX = 0;
+  startY = 0;
+  translateX = 0;
+  translateY = 0;
+  scale = 1;
+
+  @ViewChild('imagenElement', { static: false }) imagenElement!: ElementRef;
+
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: Documento,
+    private cdr: ChangeDetectorRef,
     private imagenService: ImagenService,
-    public  loadingIndicatorService: LoadingIndicatorService
-    ) {
+    public  loadingIndicatorService: LoadingIndicatorService,
+  ) {
     this.datos = data;
+    this.dataSource = new MatTableDataSource(data.PersonasDtos);
     this.imageId = this.imageDialogOpen
       ? this.datos.Hojas[0].ImagenReversoId
       : this.datos.Hojas[0].ImagenFrontalId;
   }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.cdr.detectChanges();
+    if (this.imagenElement) {
+      var scale = 1,
+        panning = false,
+        pointX = 0,
+        pointY = 0,
+        start = { x: 0, y: 0 },
+        zoom = this.imagenElement.nativeElement;
+    }
+  }
+
   ngOnInit(): void {
     this.obtentenerImagen(this.datos.Hojas[0].ImagenFrontalId);
   }
 
-  verImagen(idImagen: number) {
-    console.log(idImagen);
-    this.loadingIndicatorService.showLoading();
-
-    this.imagenService.getImagen(idImagen).subscribe(response => {
-      this.createImageFromBlob(response);
-      //this.loadingIndicatorService.hideLoading();
-    }, error => {
-      console.log(error);
-      this.loadingIndicatorService.hideLoading();
-    });
-  }
-
   obtentenerImagen(idImagen: number) {
-    this.loadingIndicatorService.showLoading();
     this.imagenService.getImagen(idImagen).subscribe((response: Blob) => {
       const reader = new FileReader();
       reader.onloadend = () => {
         this.imagenUrl = reader.result as string;
-        this.loadingIndicatorService.hideLoading();
       };
       reader.readAsDataURL(response);
-      this.loadingIndicatorService.hideLoading();
     });
   }
 
   createImageFromBlob(image: Blob) {
     let reader = new FileReader();
-    reader.addEventListener("load", () => {
-      this.imageToShow = reader.result;
-    }, false);
+    reader.addEventListener(
+      'load',
+      () => {
+        this.imageToShow = reader.result;
+      },
+      false
+    );
 
     if (image) {
       reader.readAsDataURL(image);
     }
+  }
+
+  verImagen(idImagen: number) {
+    this.loadingIndicatorService.showLoading();
+    this.imagenService.getImagen(idImagen).subscribe(
+      (response) => {
+        this.createImageFromBlob(response);
+        this.loadingIndicatorService.hideLoading();
+      },
+      (error) => {
+        console.log(error);
+        this.loadingIndicatorService.hideLoading();
+      }
+    );
+  }
+
+  openImageDialog() {
+    this.imageDialogOpen = true;
+    this.currentImageIndex = 0; // Show the first image initially
+  }
+
+  closeImageDialog() {
+    this.imageDialogOpen = false;
   }
 
   nextImage() {
@@ -87,6 +148,43 @@ export class VisualizadorDialogComponent implements OnInit {
     this.obtentenerImagen(
       this.datos.Hojas[this.currentImageIndex].ImagenFrontalId
     );
+  }
+
+  getImageTransform(): string {
+    const transform = `translate(${this.translateX}px, ${this.translateY}px) scale(${this.scale})`;
+    return transform;
+  }
+
+  toggleZoom() {
+    this.isZoomed = !this.isZoomed;
+    this.scale = this.isZoomed ? 2 : 1; // Ajusta el nivel de zoom según tus necesidades
+    this.translateX = 0;
+    this.translateY = 0;
+  }
+
+  onImageMouseDown(event: MouseEvent) {
+    if (this.isZoomed) {
+      this.isDragging = true;
+      this.startX = event.clientX - this.translateX;
+      this.startY = event.clientY - this.translateY;
+      this.imagenElement.nativeElement.style.cursor = 'grabbing';
+    }
+  }
+
+  @HostListener('window:mousemove', ['$event'])
+  onImageMouseMove(event: MouseEvent) {
+    if (this.isDragging) {
+      this.translateX = event.clientX - this.startX;
+      this.translateY = event.clientY - this.startY;
+    }
+  }
+
+  @HostListener('window:mouseup', ['$event'])
+  onImageMouseUp() {
+    if (this.isDragging) {
+      this.isDragging = false;
+      this.imagenElement.nativeElement.style.cursor = 'grab';
+    }
   }
 
   abrirImagenEnNuevaVentana() {
