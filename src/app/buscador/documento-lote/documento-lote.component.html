@@ -1,67 +1,113 @@
 <button class="loading-overlay" [hidden]="!loadingIndicatorService.loading">
-    <span
-      class="spinner-border spinner-border-sm"
-      role="status"
-      aria-hidden="true"
-    ></span>
-    Cargando...
-  </button>
+  <span
+    class="spinner-border spinner-border-sm"
+    role="status"
+    aria-hidden="true"
+  ></span>
+  Cargando...
+</button>
 <div class="row">
-<mat-toolbar><span>Listado de Documentos</span></mat-toolbar>
-            <div class="row content">
-                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-                    <ng-container matColumnDef="LoteId">
-                        <th mat-header-cell *matHeaderCellDef> Lote</th>
-                        <td mat-cell *matCellDef="let element"> {{element.LoteId}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="DocumentoId">
-                        <th mat-header-cell *matHeaderCellDef> Documento</th>
-                        <td mat-cell *matCellDef="let element"> {{element.DocumentoId}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="EstadoId" >
-                        <th mat-header-cell *matHeaderCellDef [hidden]="true"> Estado Id </th>
-                        <td mat-cell *matCellDef="let element" [hidden]="true"> {{element.EstadoId}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="EstadoDescripcion">
-                        <th mat-header-cell *matHeaderCellDef [hidden]="true"> Estado Descripcion </th>
-                        <td mat-cell *matCellDef="let element" [hidden]="true"> {{element.EstadoDescripcion}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="HojaId" >
-                        <th mat-header-cell *matHeaderCellDef [hidden]="true"> Hoja Id </th>
-                        <td mat-cell *matCellDef="let element" [hidden]="true"> {{element.HojaId}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="CarillaId" >
-                        <th mat-header-cell *matHeaderCellDef [hidden]="true"> Carilla Id </th>
-                        <td mat-cell *matCellDef="let element" [hidden]="true"> {{element.CarillaId}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="Apellido">
-                        <th mat-header-cell *matHeaderCellDef [hidden]="true"> Apellido </th>
-                        <td mat-cell *matCellDef="let element" [hidden]="true"> {{element.Apellido}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="Nombre">
-                        <th mat-header-cell *matHeaderCellDef [hidden]="true">Nombre </th>
-                        <td mat-cell *matCellDef="let element" [hidden]="true"> {{element.Nombre}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="NroDocumento">
-                        <th mat-header-cell *matHeaderCellDef [hidden]="true">NroDocumento </th>
-                        <td mat-cell *matCellDef="let element" [hidden]="true"> {{element.NroDocumento}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="Legajo">
-                        <th mat-header-cell *matHeaderCellDef [hidden]="true">Legajo </th>
-                        <td mat-cell *matCellDef="let element" [hidden]="true"> {{element.TipoRendicion}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="actions">
-                        <th mat-header-cell *matHeaderCellDef>Acciones</th>
-                        <td mat-cell *matCellDef="let row">
-                            <button mat-button (click)="getDocumento(row)"><mat-icon>visibility</mat-icon></button>
-                        </td>
-                    </ng-container>
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                </table>
-                <mat-paginator [length]="totalRecords" [pageSize]="selectedPageSize" [pageIndex]="page - 1"
-                    [pageSizeOptions]="pageSizeOptions" (page)="onPageChange($event)">
-                </mat-paginator>
+  <mat-toolbar>
+    <!-- <span>Listado de Documentos</span> -->
+    <div
+    class="mat-toolbar-row"
+    style="
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    "
+  >
+    <span>Listado de Documentos</span>
 
-            </div>
+    <button
+      type="button"
+      class="btn btn-lg"
+      style="color: white; text-decoration: underline;"
+      (click)="volverAtras()"
+    >
+      <mat-icon>reply</mat-icon>Volver
+    </button>
+  </div>
+</mat-toolbar>
+  <div class="row content">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="LoteId">
+        <th mat-header-cell *matHeaderCellDef>Lote</th>
+        <td mat-cell *matCellDef="let element">{{ element.LoteId }}</td>
+      </ng-container>
+      <ng-container matColumnDef="DocumentoId">
+        <th mat-header-cell *matHeaderCellDef>Documento</th>
+        <td mat-cell *matCellDef="let element">{{ element.DocumentoId }}</td>
+      </ng-container>
+      <ng-container matColumnDef="EstadoId">
+        <th mat-header-cell *matHeaderCellDef [hidden]="true">Estado Id</th>
+        <td mat-cell *matCellDef="let element" [hidden]="true">
+          {{ element.EstadoId }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="EstadoDescripcion">
+        <th mat-header-cell *matHeaderCellDef [hidden]="true">
+          Estado Descripcion
+        </th>
+        <td mat-cell *matCellDef="let element" [hidden]="true">
+          {{ element.EstadoDescripcion }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="HojaId">
+        <th mat-header-cell *matHeaderCellDef [hidden]="true">Hoja Id</th>
+        <td mat-cell *matCellDef="let element" [hidden]="true">
+          {{ element.HojaId }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="CarillaId">
+        <th mat-header-cell *matHeaderCellDef [hidden]="true">Carilla Id</th>
+        <td mat-cell *matCellDef="let element" [hidden]="true">
+          {{ element.CarillaId }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="Apellido">
+        <th mat-header-cell *matHeaderCellDef [hidden]="true">Apellido</th>
+        <td mat-cell *matCellDef="let element" [hidden]="true">
+          {{ element.Apellido }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="Nombre">
+        <th mat-header-cell *matHeaderCellDef [hidden]="true">Nombre</th>
+        <td mat-cell *matCellDef="let element" [hidden]="true">
+          {{ element.Nombre }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="NroDocumento">
+        <th mat-header-cell *matHeaderCellDef [hidden]="true">NroDocumento</th>
+        <td mat-cell *matCellDef="let element" [hidden]="true">
+          {{ element.NroDocumento }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="Legajo">
+        <th mat-header-cell *matHeaderCellDef [hidden]="true">Legajo</th>
+        <td mat-cell *matCellDef="let element" [hidden]="true">
+          {{ element.TipoRendicion }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let row">
+          <button mat-button (click)="getDocumento(row)">
+            <mat-icon>visibility</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    <mat-paginator
+      [length]="totalRecords"
+      [pageSize]="selectedPageSize"
+      [pageIndex]="page - 1"
+      [pageSizeOptions]="pageSizeOptions"
+      (page)="onPageChange($event)"
+    >
+    </mat-paginator>
+  </div>
 </div>

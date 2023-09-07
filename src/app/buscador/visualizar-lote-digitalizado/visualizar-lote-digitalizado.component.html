@@ -7,7 +7,30 @@
   Cargando...
 </button>
 <div class="row">
-  <mat-toolbar><span>Lotes</span></mat-toolbar>
+  <mat-toolbar>
+    <div
+      class="mat-toolbar-row"
+      style="
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+      "
+    >
+      <span>Lotes</span>
+        <div style="align-items:baseline;">
+      <button
+        type="button"
+        class="btn btn-lg"
+        style="color: white; text-decoration: underline;"
+        (click)="volverAtras()"
+      >
+        <mat-icon>arrow_back_ios</mat-icon>Volver
+      </button>
+    </div>
+
+    </div>
+  </mat-toolbar>
   <div class="row content">
     <mat-form-field>
       <mat-label>Seleccionar usuario</mat-label>
@@ -22,19 +45,11 @@
     </mat-form-field>
 
     <div class="mt-1">
-      <button
-        type="button"
-        class="btn btn-lg button"
-        (click)="limpiar()"
-      >
+      <button type="button" class="btn btn-lg button" (click)="limpiar()">
         limpiar
       </button>
       <span></span>
-      <button
-        type="button"
-        class="btn btn-lg button"
-        (click)="search()"
-      >
+      <button type="button" class="btn btn-lg button" (click)="search()">
         Buscar
       </button>
     </div>
@@ -53,22 +68,26 @@
         <td mat-cell *matCellDef="let element">{{ element.Fecha }}</td>
       </ng-container>
       <ng-container matColumnDef="Estado">
-        <th mat-header-cell *matHeaderCellDef  [hidden]="true">Estado</th>
-        <td mat-cell *matCellDef="let element"  [hidden]="true">{{ element.EstadoId }}</td>
+        <th mat-header-cell *matHeaderCellDef [hidden]="true">Estado</th>
+        <td mat-cell *matCellDef="let element" [hidden]="true">
+          {{ element.EstadoId }}
+        </td>
       </ng-container>
       <ng-container matColumnDef="EstadoDescripcion">
-        <th mat-header-cell *matHeaderCellDef  >Estado Descripcion</th>
-        <td mat-cell *matCellDef="let element" >
+        <th mat-header-cell *matHeaderCellDef>Estado Descripcion</th>
+        <td mat-cell *matCellDef="let element">
           {{ element.EstadoDescripcion }}
         </td>
       </ng-container>
       <ng-container matColumnDef="UsuarioId">
         <th mat-header-cell *matHeaderCellDef [hidden]="true">Usuario Id</th>
-        <td mat-cell *matCellDef="let element"  [hidden]="true">{{ element.UsuarioId }}</td>
+        <td mat-cell *matCellDef="let element" [hidden]="true">
+          {{ element.UsuarioId }}
+        </td>
       </ng-container>
       <ng-container matColumnDef="UsuarioNombre">
-        <th mat-header-cell *matHeaderCellDef >Usuario Nombre</th>
-        <td mat-cell *matCellDef="let element" >{{ element.UsuarioNombre }}</td>
+        <th mat-header-cell *matHeaderCellDef>Usuario Nombre</th>
+        <td mat-cell *matCellDef="let element">{{ element.UsuarioNombre }}</td>
       </ng-container>
       <ng-container matColumnDef="UsuarioApellido">
         <th mat-header-cell *matHeaderCellDef>Usuario Apellido</th>

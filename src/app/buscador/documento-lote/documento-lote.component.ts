@@ -2,11 +2,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Documento, WebApiResponse } from 'src/app/models/documento_response';
 import { AuditoriaService } from 'src/app/shared/auditoria.service';
 import { DetailComponentComponent } from '../detail-component/detail-component.component';
 import { LoadingIndicatorService } from 'src/app/shared/services/loading-indicator.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-documento-lote',
@@ -15,6 +16,7 @@ import { LoadingIndicatorService } from 'src/app/shared/services/loading-indicat
 })
 export class DocumentoLoteComponent implements OnInit {
   rowData: any;
+  paginationState: any;
   displayedColumns: string[] = ['LoteId','DocumentoId', 'EstadoId', 'EstadoDescripcion', 'HojaId', 'CarillaId', 'Apellido','Nombre','NroDocumento','Legajo','actions']; 
   dataSource = new MatTableDataSource<any>();
   pageSizeOptions: number[] = [10, 25, 50];
@@ -29,12 +31,15 @@ export class DocumentoLoteComponent implements OnInit {
   constructor(private route: ActivatedRoute, 
     private auditoriaService: AuditoriaService,
     public  loadingIndicatorService: LoadingIndicatorService,
+    private router: Router,
+    private location: Location,
     private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       const state = history.state;
       this.rowData = state.rowData;
+      this.paginationState = state.paginationState;
     });
     this.cargarResultados();
     
@@ -76,5 +81,10 @@ export class DocumentoLoteComponent implements OnInit {
         console.log(this.resultDocumento);
       }
     });
+  }
+
+  volverAtras(): void {
+    localStorage.setItem('paginationStateFromChild', JSON.stringify(this.paginationState));
+    this.location.back();
   }
 }

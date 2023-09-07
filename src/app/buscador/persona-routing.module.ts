@@ -3,6 +3,7 @@ import { RouterModule , Routes} from '@angular/router';
 import { FindPersonaComponent } from './find-persona/find-persona.component';
 import { VisualizarLoteDigitalizadoComponent } from './visualizar-lote-digitalizado/visualizar-lote-digitalizado.component';
 import { DocumentoLoteComponent } from './documento-lote/documento-lote.component';
+import { DetailComponentComponent } from './detail-component/detail-component.component';
 
 const routes: Routes = [
   {path:'persona', component: FindPersonaComponent  },
