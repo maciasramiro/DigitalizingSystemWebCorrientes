@@ -21,6 +21,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { DocumentoLoteComponent } from './documento-lote/documento-lote.component';
 import { DetailComponentComponent } from './detail-component/detail-component.component';
 import { LoadingIndicatorComponent } from './loading-indicator/loading-indicator.component';
+import { PersonaComponent } from './persona/persona.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { LoadingIndicatorComponent } from './loading-indicator/loading-indicator
     VisualizarLoteDigitalizadoComponent,
     DocumentoLoteComponent,
     DetailComponentComponent,
-    LoadingIndicatorComponent
+    LoadingIndicatorComponent,
+    PersonaComponent
   ],
   imports: [
     CommonModule,
